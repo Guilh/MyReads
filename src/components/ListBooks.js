@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
 import Bookshelf from './Bookshelf'
 
-export default class ListBooks extends Component {
+class ListBooks extends Component {
+
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+  }
+
   render() {
     return (
       <div className="list-books">
@@ -12,9 +18,9 @@ export default class ListBooks extends Component {
 
         <div className="list-books-content">
           <div>
-            <Bookshelf title="Currently Reading" />
-            <Bookshelf title="Want to Read" />
-            <Bookshelf title="Read" />
+            <Bookshelf title="Currently Reading" books={this.props.books} />
+            <Bookshelf title="Want to Read" books={this.props.books} />
+            <Bookshelf title="Read" books={this.props.books} />
           </div>
         </div>
 
@@ -25,3 +31,5 @@ export default class ListBooks extends Component {
     )
   }
 }
+
+export default ListBooks

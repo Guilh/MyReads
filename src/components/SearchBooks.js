@@ -1,8 +1,38 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import * as BooksAPI from '../BooksAPI'
+import escapeRegExp from 'escape-string-regexp';
+import Book from './Book'
 
 export default class SearchBooks extends Component {
+
+  state = {
+    books: [],
+    query: ''
+  }
+
+  updateQuery = (query) => {
+    this.setState({ query })
+  }
+  onSearch = (e) => {
+    e.preventDefault();
+    BooksAPI.search(this.state.query).then(books => {
+      this.setState({ books })
+    })
+  }
+  componentWillUnmount() {
+    this.setState({ books: [] })
+  }
+
   render() {
+    let showingBooks;
+    if (this.state.query) {
+      const match = new RegExp(escapeRegExp(this.state.query), 'i')
+      showingBooks = this.state.books.filter(book => match.test(book.title))
+    } else {
+      showingBooks = this.state.books
+    }
+    console.log(this.state.books)
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -16,11 +46,26 @@ export default class SearchBooks extends Component {
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-            <input type="text" placeholder="Search by title or author"/>
+            <form onSubmit={this.onSearch}>
+              <input
+                type="text"
+                placeholder="Search by title or author"
+                onChange={e => this.updateQuery(e.target.value)}
+              />
+            </form>
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid"></ol>
+          <ol className="books-grid">
+            {showingBooks.map((book, index) => (
+              <Book
+                title={book.title}
+                authors={book.authors}
+                image={book.imageLinks.thumbnail}
+                key={index}
+              />
+            ))}
+          </ol>
         </div>
       </div>
     );
