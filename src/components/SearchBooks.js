@@ -1,38 +1,32 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import * as BooksAPI from '../BooksAPI'
 import escapeRegExp from 'escape-string-regexp';
 import Book from './Book'
 
 export default class SearchBooks extends Component {
 
   state = {
-    books: [],
     query: ''
   }
 
   updateQuery = (query) => {
     this.setState({ query })
   }
-  onSearch = (e) => {
-    e.preventDefault();
-    BooksAPI.search(this.state.query).then(books => {
-      this.setState({ books })
-    })
-  }
-  componentWillUnmount() {
-    this.setState({ books: [] })
+
+  handleSubmit = (e) => {
+     e.preventDefault();
+     this.props.onSearch(this.state.query);
+     e.currentTarget.reset();
   }
 
   render() {
     let showingBooks;
     if (this.state.query) {
       const match = new RegExp(escapeRegExp(this.state.query), 'i')
-      showingBooks = this.state.books.filter(book => match.test(book.title))
+      showingBooks = this.props.books.filter(book => match.test(book.title))
     } else {
-      showingBooks = this.state.books
+      showingBooks = this.props.books
     }
-    console.log(this.state.books)
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -46,7 +40,7 @@ export default class SearchBooks extends Component {
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-            <form onSubmit={this.onSearch}>
+            <form onSubmit={this.handleSubmit}>
               <input
                 type="text"
                 placeholder="Search by title or author"

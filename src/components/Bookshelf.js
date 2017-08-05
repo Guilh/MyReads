@@ -22,6 +22,7 @@ const Bookshelf = (props) => (
 
 Bookshelf.propTypes = {
   books: PropTypes.array.isRequired,
+  updateShelf: PropTypes.func.isRequired
 }
 
 export default Bookshelf
