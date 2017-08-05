@@ -10,6 +10,10 @@ class ListBooks extends Component {
   }
 
   render() {
+    const currentlyReading = this.props.books.filter(book => book.shelf === 'currentlyReading')
+    const wantToRead = this.props.books.filter(book => book.shelf === 'wantToRead')
+    const read = this.props.books.filter(book => book.shelf === 'read')
+
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -18,9 +22,9 @@ class ListBooks extends Component {
 
         <div className="list-books-content">
           <div>
-            <Bookshelf title="Currently Reading" books={this.props.books} />
-            <Bookshelf title="Want to Read" books={this.props.books} />
-            <Bookshelf title="Read" books={this.props.books} />
+            <Bookshelf title="Currently Reading" books={currentlyReading} />
+            <Bookshelf title="Want to Read" books={wantToRead} />
+            <Bookshelf title="Read" books={read} />
           </div>
         </div>
 
