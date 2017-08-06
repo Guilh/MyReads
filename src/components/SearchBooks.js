@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import * as BooksAPI from '../BooksAPI'
 import { Link } from 'react-router-dom'
 import escapeRegExp from 'escape-string-regexp';
 import Book from './Book'
@@ -6,7 +7,14 @@ import Book from './Book'
 export default class SearchBooks extends Component {
 
   state = {
-    query: ''
+    query: '',
+    searchedBooks: []
+  }
+
+  performSearch = (query) => {
+    BooksAPI.search(query).then(searchedBooks => {
+      this.setState({ searchedBooks })
+    })
   }
 
   updateQuery = (query) => {
@@ -15,7 +23,7 @@ export default class SearchBooks extends Component {
 
   handleSubmit = (e) => {
      e.preventDefault();
-     this.props.onSearch(this.state.query);
+     this.performSearch(this.state.query);
      e.currentTarget.reset();
   }
 
@@ -23,9 +31,9 @@ export default class SearchBooks extends Component {
     let showingBooks;
     if (this.state.query) {
       const match = new RegExp(escapeRegExp(this.state.query), 'i')
-      showingBooks = this.props.books.filter(book => match.test(book.title))
+      showingBooks = this.state.searchedBooks.filter(book => match.test(book.title))
     } else {
-      showingBooks = this.props.books
+      showingBooks = this.state.searchedBooks
     }
     return (
       <div className="search-books">
@@ -54,6 +62,9 @@ export default class SearchBooks extends Component {
             {showingBooks.map((book, index) => (
               <Book
                 title={book.title}
+                id={book.id}
+                shelf={book.shelf}
+                updateShelf={this.props.updateShelf}
                 authors={book.authors}
                 image={book.imageLinks.thumbnail}
                 key={index}

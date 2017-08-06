@@ -8,15 +8,16 @@ class Book extends Component {
   }
 
   state = {
-    value: 'none'
+    value: this.props.shelf,
+    book: {id: this.props.id}
   }
 
   updateValue = (value) => {
     this.setState({ value })
+    this.props.updateShelf(this.state.book, value);
   }
 
   render() {
-    console.log(this.state.value)
     return (
       <li>
         <div className="book">
@@ -34,7 +35,7 @@ class Book extends Component {
           </div>
           <div className="book-title">{this.props.title}</div>
           <div className="book-authors">
-            {this.props.authors}
+           {this.props.authors.map((author, i) => <span key={i}>{author}</span>)}
           </div>
         </div>
       </li>

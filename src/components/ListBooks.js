@@ -18,12 +18,15 @@ const ListBooks = (props) => {
         <div>
           <Bookshelf
             title="Currently Reading"
+            updateShelf={props.updateShelf}
             books={currentlyReading} />
           <Bookshelf
             title="Want to Read"
+            updateShelf={props.updateShelf}
             books={wantToRead} />
           <Bookshelf
             title="Read"
+            updateShelf={props.updateShelf}
             books={read} />
         </div>
       </div>
