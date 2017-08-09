@@ -10,7 +10,6 @@ class SearchBooks extends Component {
   }
 
   search = (query) => {
-    this.setState({ query })
     BooksAPI.search(query).then(books => {
       this.setState({ searchedBooks: books })
       console.log(this.state.searchedBooks)
@@ -39,7 +38,7 @@ class SearchBooks extends Component {
                 title={book.title}
                 id={book.id}
                 updateShelf={this.props.updateShelf}
-                authors={book.authors ? book.authors : ['Author McAuthorFace']}
+                authors={book.authors || ['Author McAuthorFace']}
                 image={book.imageLinks.thumbnail}
                 key={index}
               />

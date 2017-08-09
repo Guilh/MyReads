@@ -7,11 +7,13 @@ const Bookshelf = (props) => (
     <h2 className="bookshelf-title">{props.title}</h2>
     <div className="bookshelf-books">
       <ol className="books-grid">
+      {/* Some searches (like Android) do not return an 'authors' array for each book,
+          which crashes the search behavior */}      
         {props.books.map((book, index) => (
           <Book
             title={book.title}
             shelf={book.shelf}
-            authors={book.authors ? book.authors : ['Author McAuthorFace']}
+            authors={book.authors || ['Author McAuthorFace']}
             id={book.id}
             image={book.imageLinks.thumbnail}
             updateShelf={props.updateShelf}
