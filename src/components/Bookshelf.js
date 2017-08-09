@@ -10,11 +10,11 @@ const Bookshelf = (props) => (
         {props.books.map((book, index) => (
           <Book
             title={book.title}
-            updateShelf={props.updateShelf}
-            id={book.id}
             shelf={book.shelf}
-            authors={book.authors}
+            authors={book.authors ? book.authors : ['Author McAuthorFace']}
+            id={book.id}
             image={book.imageLinks.thumbnail}
+            updateShelf={props.updateShelf}
             key={index}
           />
         ))}

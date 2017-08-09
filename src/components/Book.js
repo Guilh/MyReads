@@ -4,17 +4,20 @@ import PropTypes from 'prop-types';
 class Book extends Component {
 
   static propTypes = {
-    updateShelf: PropTypes.func.isRequired
+    title: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    authors: PropTypes.array.isRequired,
+    id: PropTypes.string.isRequired,
+    updateShelf: PropTypes.func.isRequired,
   }
 
   state = {
-    value: this.props.shelf,
-    book: {id: this.props.id}
+    value: this.props.shelf
   }
 
   updateValue = (value) => {
     this.setState({ value })
-    this.props.updateShelf(this.state.book, value);
+    this.props.updateShelf({id: this.props.id}, value);
   }
 
   render() {
@@ -24,7 +27,7 @@ class Book extends Component {
           <div className="book-top">
             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${this.props.image})` }}></div>
             <div className="book-shelf-changer">
-              <select value={this.state.value} onChange={e => this.updateValue(e.target.value)}>
+              <select value={this.props.shelf ? this.state.value : 'none'} onChange={e => this.updateValue(e.target.value)}>
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading" >Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -35,7 +38,7 @@ class Book extends Component {
           </div>
           <div className="book-title">{this.props.title}</div>
           <div className="book-authors">
-           {this.props.authors.map((author, i) => <span key={i}>{author}</span>)}
+            {this.props.authors}
           </div>
         </div>
       </li>

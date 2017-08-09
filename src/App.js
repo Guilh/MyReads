@@ -7,7 +7,7 @@ import SearchBooks from './components/SearchBooks'
 
 class BooksApp extends React.Component {
   state = {
-    books: [],
+    books: []
   }
 
   componentDidMount() {
@@ -27,7 +27,6 @@ class BooksApp extends React.Component {
   }
 
   render() {
-
     return (
       <div className="app">
         <Route exact path="/" render={() => (
