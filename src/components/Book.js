@@ -11,12 +11,7 @@ class Book extends Component {
     updateShelf: PropTypes.func.isRequired,
   }
 
-  state = {
-    value: this.props.shelf
-  }
-
   updateValue = (value) => {
-    this.setState({ value })
     this.props.updateShelf({id: this.props.id}, value);
   }
 
@@ -27,7 +22,7 @@ class Book extends Component {
           <div className="book-top">
             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${this.props.image})` }}></div>
             <div className="book-shelf-changer">
-              <select value={this.props.shelf ? this.state.value : 'none'} onChange={e => this.updateValue(e.target.value)}>
+              <select value={this.props.shelf || 'none'} onChange={e => this.updateValue(e.target.value)}>
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading" >Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -38,7 +33,7 @@ class Book extends Component {
           </div>
           <div className="book-title">{this.props.title}</div>
           <div className="book-authors">
-            {this.props.authors}
+            {this.props.authors.join(", ")}
           </div>
         </div>
       </li>
