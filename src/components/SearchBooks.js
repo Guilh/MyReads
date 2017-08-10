@@ -30,6 +30,7 @@ class SearchBooks extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
+            {console.log(this.state.searchedBooks)}
             {this.state.searchedBooks.map(book => (
               <Book
                 book={book}
