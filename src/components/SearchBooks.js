@@ -12,7 +12,6 @@ class SearchBooks extends Component {
   search = (query) => {
     BooksAPI.search(query).then(books => {
       this.setState({ searchedBooks: books })
-      console.log(this.state.searchedBooks)
     })
   }
 
@@ -31,16 +30,12 @@ class SearchBooks extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {/* Some searches (like Android) do not return an 'authors' array for each book,
-                which crashes the search behavior */}
-            {this.state.searchedBooks.map((book, index) => (
+            {this.state.searchedBooks.map(book => (
               <Book
-                title={book.title}
-                id={book.id}
+                book={book}
+                shelf={book.shelf}
                 updateShelf={this.props.updateShelf}
-                authors={book.authors || ['Author McAuthorFace']}
-                image={book.imageLinks.thumbnail}
-                key={index}
+                key={book.id}
               />
             ))}
           </ol>

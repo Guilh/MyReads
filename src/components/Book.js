@@ -4,25 +4,38 @@ import PropTypes from 'prop-types';
 class Book extends Component {
 
   static propTypes = {
-    title: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    authors: PropTypes.array.isRequired,
-    id: PropTypes.string.isRequired,
-    updateShelf: PropTypes.func.isRequired,
+    book: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      imageLinks: PropTypes.object.isRequired,
+      authors: PropTypes.array.isRequired,
+      id: PropTypes.string.isRequired
+   }),
+   updateShelf: PropTypes.func.isRequired
+  }
+
+  static defaultProps = {
+    shelf: 'none'
+  }
+
+  state = {
+    shelf: this.props.shelf
   }
 
   updateValue = (value) => {
-    this.props.updateShelf({id: this.props.id}, value);
+    this.setState({ shelf: value })
+    this.props.updateShelf({id: this.props.book.id}, value);
   }
 
   render() {
+    const { book } = this.props
+
     return (
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${this.props.image})` }}></div>
+            <div className="book-cover" style={{ backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
             <div className="book-shelf-changer">
-              <select value={this.props.shelf || 'none'} onChange={e => this.updateValue(e.target.value)}>
+              <select value={this.state.shelf} onChange={e => this.updateValue(e.target.value)}>
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading" >Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -31,9 +44,9 @@ class Book extends Component {
               </select>
             </div>
           </div>
-          <div className="book-title">{this.props.title}</div>
+          <div className="book-title">{book.title}</div>
           <div className="book-authors">
-            {this.props.authors.join(", ")}
+            { book.authors ? book.authors.join(", ") : ''}
           </div>
         </div>
       </li>
