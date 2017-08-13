@@ -15,14 +15,14 @@ class SearchBooks extends Component {
     searchedBooks: []
   }
 
-  updateResults(searchResults) {
+  updateResults(results) {
      const inMyReads = this.props.books.map(b => b.id)
-     searchResults.forEach(book => {
+     results.forEach(book => {
        inMyReads.includes(book.id) && (
          book.shelf = this.props.books.filter(b => b.id === book.id)[0].shelf
        )
      })
-     this.setState({ searchedBooks: searchResults })
+     this.setState({ searchedBooks: results })
   }
 
   search = (query) => {

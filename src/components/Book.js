@@ -7,7 +7,6 @@ class Book extends Component {
     book: PropTypes.shape({
       title: PropTypes.string.isRequired,
       imageLinks: PropTypes.object.isRequired,
-      authors: PropTypes.array.isRequired,
       id: PropTypes.string.isRequired
    }),
    updateShelf: PropTypes.func.isRequired
