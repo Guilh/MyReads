@@ -24,7 +24,6 @@ class Book extends Component {
 
   render() {
     const { book } = this.props
-    console.log(this.state.shelf)
     return (
       <li>
         <div className="book">

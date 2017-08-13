@@ -8,8 +8,7 @@ import SearchBooks from './components/SearchBooks'
 class BooksApp extends React.Component {
 
   state = {
-    books: [],
-    searchedBooks: []
+    books: []
   }
 
   componentDidMount() {
