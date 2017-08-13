@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 class Book extends Component {
 
@@ -13,17 +13,13 @@ class Book extends Component {
    updateShelf: PropTypes.func.isRequired
   }
 
-  static defaultProps = {
-    shelf: 'none'
-  }
-
   state = {
-    shelf: this.props.shelf
+    shelf: this.props.book.shelf
   }
 
   updateValue = (value) => {
     this.setState({ shelf: value })
-    this.props.updateShelf({id: this.props.book.id}, value);
+    this.props.updateShelf({id: this.props.book.id}, value)
   }
 
   render() {

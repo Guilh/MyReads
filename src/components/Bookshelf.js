@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 import Book from './Book'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const Bookshelf = (props) => (
   <div className="bookshelf">
@@ -10,7 +10,6 @@ const Bookshelf = (props) => (
         {props.books.map(book => (
           <Book
             book={book}
-            shelf={book.shelf}
             updateShelf={props.updateShelf}
             key={book.id}
           />
